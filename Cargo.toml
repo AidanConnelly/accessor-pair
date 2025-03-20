@@ -6,5 +6,6 @@ description = "A trait for a pair of a getter and a setter, with a macro for eas
 documentation = "https://docs.rs/accessor-pair"
 readme = "README.md"
 homepage = "https://github.com/AidanConnelly/accessor-pair"
+license = "MIT"
 
 [dependencies]
