@@ -25,14 +25,12 @@ where
     }
 }
 
-
 macro_rules! field_accessors {
-    ($struct:ident, $field:ident) => {
-        {
-            let accessor_pair:(fn(&$struct) -> &_, fn(&mut $struct) -> &mut _) = (|s: &$struct| &s.$field, |s: &mut $struct| &mut s.$field);
-            accessor_pair
-        }
-    };
+    (| $_1:ident : $struct:ty | $_2:ident . $field:ident) => {{
+        let accessor_pair: (fn(&$struct) -> &_, fn(&mut $struct) -> &mut _) =
+            (|s: &$struct| &s.$field, |s: &mut $struct| &mut s.$field);
+        accessor_pair
+    }};
 }
 
 #[cfg(test)]
@@ -50,7 +48,8 @@ mod tests {
             species: "Horsetails".to_string(),
             healthy: true,
         };
-        let species_accessor: _ = field_accessors!(Fern, species);
+
+        let species_accessor: _ = field_accessors!(|fern:Fern| fern.species);
 
         fn test_getter<T:AccessorPair<Fern, String>>(
             accessor: T,
